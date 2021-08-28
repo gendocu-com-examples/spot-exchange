@@ -1,0 +1,12 @@
+spectype: gendocu
+servers:
+  - selector: "gendocu.spot_exchange.SpotExchange"
+    envs:
+      - name: "local"
+        noValidate: true
+        urls:
+          - grpc://localhost:8010
+documentation:
+  content:
+    introduction:
+      file: docs/introduction.md

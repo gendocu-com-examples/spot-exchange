@@ -1,0 +1,42 @@
+syntax = "proto3";
+package gendocu.spot_exchange;
+import "google/protobuf/empty.proto";
+
+// SpotExchange is a main service for assets exchange
+service SpotExchange {
+  // List all orders available on market.
+  rpc ListOrders(google.protobuf.Empty) returns (stream Order) {}
+  // Places the order on the spot exchange - the response stream returns all accepted by market orders.
+  rpc PlaceOrder(stream OrderRequest) returns (stream Order) {}
+  // Returns your account balance.
+  rpc Balance(BalanceRequest) returns (BalanceResponse) {}
+}
+
+// [Example]{"order_type": 0, "asset_id": "APPL", "volume": "2", "order_id": "12345"}
+message Order {
+  OrderType order_type = 1; // Buy or sell orders
+  string asset_id = 2; // APPL or BTC
+  int32 volume = 3;
+  string order_id = 4;
+  int32 price_limit = 5; // In 0.01 USD, for buy it's maximum price, for sell minimum price
+}
+
+message OrderRequest {
+  string account_id = 1;
+  Order order = 2;
+}
+
+enum OrderType {
+  Buy = 0;
+  Sell = 1;
+}
+
+message BalanceRequest {
+  string account_id = 1;
+}
+
+// [Example]{"account_id": "asds-fdsasd12-213-231"}
+message BalanceResponse {
+  string account_id = 1;
+  map<string, int32> assets = 2;
+}
