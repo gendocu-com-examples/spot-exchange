@@ -12,7 +12,7 @@ service SpotExchange {
   rpc Balance(BalanceRequest) returns (BalanceResponse) {}
 }
 
-// [Example]{"order_type": 0, "asset_id": "APPL", "volume": "2", "order_id": "12345"}
+// [Example]{"order_type": 0, "asset_id": "APPL", "volume": "2", "order_id": "order::NYC::12345"}
 message Order {
   OrderType order_type = 1; // Buy or sell orders
   string asset_id = 2; // APPL or BTC
@@ -21,6 +21,7 @@ message Order {
   int32 price_limit = 5; // In 0.01 USD, for buy it's maximum price, for sell minimum price
 }
 
+// [Example]{"account_id": "account::USA:2132231"}
 message OrderRequest {
   string account_id = 1;
   Order order = 2;
@@ -31,11 +32,12 @@ enum OrderType {
   Sell = 1;
 }
 
+// [Example]{"account_id": "account::USA:2132231"}
 message BalanceRequest {
   string account_id = 1;
 }
 
-// [Example]{"account_id": "asds-fdsasd12-213-231"}
+// [Example]{"account_id": "account::USA:2132231"}
 message BalanceResponse {
   string account_id = 1;
   map<string, int32> assets = 2;
